@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Root Variables for Theming */
+        :root {
+            --primary-color: #667eea;
+            --primary-dark: #5a67d8;
+            --secondary-color: #f093fb;
+            --accent-color: #4facfe;
+            --success-color: #48bb78;
+            --warning-color: #ed8936;
+            --error-color: #f56565;
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --bg-primary: #0f172a;
+            --bg-secondary:#0f172a;
+            --bg-card: #1e293b;
+            --border-color: #ffffff;
+            --shadow-sm: 0 1px 3px white;
+            --shadow-md: 0 4px 6px white;
+            --shadow-lg: 0 10px 25px white;
+            --shadow-xl: 0 20px 40px rgb(184, 167, 167);
+        }
+
+        /* Dark Theme Variables */
+        [data-theme="dark"] {
+            --text-primary: #f7fafc;
+            --text-secondary: #a0aec0;
+            --bg-primary: #1a202c;
+            --bg-secondary: #2d3748;
+            --bg-card: #2d3748;
+            --border-color: #4a5568;
+            --shadow-sm: 0 1px 3px white;
+            --shadow-md: 0 4px 6px white;
+            --shadow-lg: 0 10px 25px white;
+        }
+         /* Body Styles */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-x: hidden; /* Prevent horizontal scroll from animated background */
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .floating-shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-color);
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            background: var(--secondary-color);
+            top: 60%;
+            right: 10%;
+            animation-delay: -5s;
+        }
+
+        .floating-shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            background: var(--accent-color);
+            top: 80%;
+            left: 20%;
+            animation-delay: -10s;
+        }
+
+        .floating-shape:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            background: var(--success-color);
+            top: 30%;
+            right: 30%;
+            animation-delay: -15s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(90deg); }
+            50% { transform: translateY(-10px) rotate(180deg); }
+            75% { transform: translateY(-30px) rotate(270deg); }
+        }
+
+        /* Header */
+        header {
+            background: #1e293b;
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        [data-theme="dark"] header {
+            background: rgba(26, 32, 44, 0.95);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+           padding: 20px 5%;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+            
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+       
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 10;
+            padding-top: 80px; /* To account for fixed header */
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            animation: slideInUp 1s ease-out 0.2s both;
+        }
+
+         .About {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .About-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .About-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .About-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .About-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .About-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .About-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .About-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .About-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .About-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+         /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Hide navigation links on small screens for simplicity */
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .About-grid {
+                grid-template-columns: 1fr;
+            }
+
+            
+        }
+        /* Focus styles */
+        button:focus-visible,
+        input:focus-visible,
+        a:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+         .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            padding-top: 5%;
+        }
+        #nav-icon{
+             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+             -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+             font-size: 1.8rem;
+            font-weight: 600;
+            margin-right: 10%;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+           <i id="nav-icon" class="fa-solid fa-graduation-cap"></i> <a href="#" class="logo">EducationHub.pk</a>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href=""></a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="about.html">About Us </a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+        </nav>
+    </header>
+    <section id="About" class="About">
+            <h2 class="section-title">Why Choose EducationHub.pk?</h2>
+           
+            
+            <div class="About-grid">
+                <div class="About-card">
+                    <div class="About-icon">
+                      <i class="fa-solid fa-tv"></i>
+                    </div>
+                    <h3>Online Result Checking</h3>
+                    <p>Allowing students to check their exam results by entering their roll numbers or names</p>
+                </div>
+                
+                <div class="About-card">
+                    <div class="About-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Exam Schedules and Date Sheets</h3>
+                    <p>Providing information about upcoming examinations, including timetables and important dates.</p>
+                </div>
+                
+                <div class="About-card">
+                    <div class="About-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Educational News and Updates</h3>
+                    <p>Sharing the latest news related to education boards, policy changes, and academic events</p>
+                </div>
+                
+                <div class="About-card">
+                    <div class="About-icon">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                    </div>
+                    <h3>Study Materials</h3>
+                    <p> Offering past papers, model papers, and other resources to aid students in their exam preparations.</p>
+                </div>
+                
+                <div class="About-card">
+                    <div class="About-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Online Admissions</h3>
+                    <p>Publishing merit lists for various institutions and providing information on admission procedures</p>
+                </div>
+                 <div class="About-card">
+                    <div class="About-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Online Admissions</h3>
+                    <p>Publishing merit lists for various institutions and providing information on admission procedures</p>
+                </div>
+                
+               
+            </div>
+        </section>
+        </body>
+</html>
